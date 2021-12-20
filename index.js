@@ -61,7 +61,7 @@ class BranchNameLint {
     }
 
     if (!this.validateWithRegex()) {
-      return this.error(this.options.msgBranchDisallowed, this.branch, this.options.regex);
+      return this.error(this.options.msgDoesNotMatchRegex, this.branch, this.options.regex);
     }
 
     if (this.options.prefixes.includes(prefix) === false) {
@@ -88,8 +88,7 @@ class BranchNameLint {
   }
 
   error() {
-    console.error('Branch name lint fail!', Reflect.apply(util.format, null, arguments)); // eslint-disable-line prefer-rest-params
-    return this.ERROR_CODE;
+    return {error: this.ERROR_CODE, message: Reflect.apply(util.format, null, arguments) };
   }
 }
 
