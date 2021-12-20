@@ -22,11 +22,16 @@ const configFileName = cli.input[0];
 
 class BranchNameLintCli {
 	constructor() {
+		try{
 		this.options = this.loadConfiguration(configFileName);
 		const branchNameLint = new BranchNameLint(this.options);
 		const answer = branchNameLint.doValidation();
-		if (answer === 1) {
-			throw new Error('Branch lint error');
+			if (answer.error === 1) {
+				throw new Error(answer.message);
+			}
+		}
+		catch(e){
+			console.log('\x1b[41m', 'Branch name lint fail!', '\x1b[47m', '\x1b[30m', e.message, '\x1b[0m'); 
 		}
 	}
 
